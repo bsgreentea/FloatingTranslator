@@ -14,7 +14,8 @@
         <service
             android:name=".Service.FloatingService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"
+            android:permission="android.permission.SYSTEM_ALERT_WINDOW"></service>
 
         <activity android:name=".MainActivity"
             android:launchMode="singleTop">

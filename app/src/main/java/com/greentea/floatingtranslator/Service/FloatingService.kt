@@ -1,42 +1,30 @@
 package com.greentea.floatingtranslator.Service
 
 import android.app.Service
+import android.content.Context
 import android.content.Intent
-import android.os.Binder
 import android.os.IBinder
-import com.greentea.floatingtranslator.FloatingView.FloatingHeadWindow
+import android.view.WindowManager
+import com.greentea.floatingtranslator.FloatingWidgetView
 
 class FloatingService : Service() {
 
-    lateinit var floatingHeadWindow: FloatingHeadWindow
-    private var mBinder = LocalBinder()
+    private lateinit var windowManager: WindowManager
+    private lateinit var floatingWidgetView: FloatingWidgetView
 
-    override fun onBind(intent: Intent): IBinder {
-        return mBinder
+    override fun onCreate() {
+        super.onCreate()
+        windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        floatingWidgetView = FloatingWidgetView(this)
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        init()
-        return super.onStartCommand(intent, flags, startId)
-    }
-
-    fun init(){
-        if(!::floatingHeadWindow.isInitialized){
-            floatingHeadWindow = FloatingHeadWindow(applicationContext).apply {
-                create()
-                createLayoutParams()
-                show()
-            }
-        }
-    }
-
-    inner class LocalBinder: Binder(){
-        fun getService(): FloatingService{
-            return this@FloatingService
-        }
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
     }
 
     override fun onDestroy() {
         super.onDestroy()
+
+//        if(::windowManager.isInitialized) windowManager.removeView(floatingWidgetView)
     }
 }

@@ -9,12 +9,9 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import com.greentea.floatingtranslator.Service.FloatingService
+import com.greentea.floatingtranslator.Utils.Constant
 
 class MainActivity : AppCompatActivity() {
-
-    companion object{
-        private const val OVERLAY_PERMISSION_REQUEST_CODE = 123
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == OVERLAY_PERMISSION_REQUEST_CODE && isDrawOverlayAllowed()){
+        if(requestCode == Constant.OVERLAY_PERMISSION_REQUEST_CODE && isDrawOverlayAllowed()){
             Toast.makeText(this, "Granted Permission", Toast.LENGTH_SHORT).show()
             startFloatingWidgetMaybe()
         }
@@ -46,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun requestForDrawingOverAppsPermission(){
         val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
-        startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST_CODE)
+        startActivityForResult(intent, Constant.OVERLAY_PERMISSION_REQUEST_CODE)
     }
 
     private fun isDrawOverlayAllowed(): Boolean =
